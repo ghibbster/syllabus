@@ -8,27 +8,39 @@ https://www.docker.com/
 
 Docker is a container, you can think of it as a small virtual machine. Use any of the standard isntallers for docker, then run:
 
+```
 docker pull klee/klee
+```
 
 to get KLEE, and run:
 
+```
 docker run --rm -ti --ulimit='stack=-1:-1' klee/klee
+```
 
 to start a small VM containing KLEE, more details can be found at: http://klee.github.io/docker/. Run
 
+```
 exit
+```
 
 to exit. Another important command is to make Docker mount a local directory:
 
+```
 sudo docker run -v [PATH IN THE HOST MACHINE]:[PATH IN THE CONTAINER] -ti --name=[NAME OF THE CONTAINER] --ulimit='stack=-1:-1' klee/klee
+```
 
 which will load the host path and a path in the Docker container. I simply give it my home_dir:
 
+```
 sudo docker run -v /Users/sicco/:/home/klee/sicco -ti --name=dock_klee --ulimit='stack=-1:-1' klee/klee
+```
 
 You can remove an old contained using rm:
 
+```
 docker rm dock_klee
+```
 
 Then download and unpack the RERS challenge programs:
 
@@ -103,13 +115,17 @@ This makes all input symbolic, for up to length 20 inputs. KLEE will try to trig
 
 You can compile the obtained .c file using:
 
+```
 clang -I /home/klee/klee_src/include -emit-llvm -g -c Problem10.c -o Problem10.bc
+```
 
 (obtain llvm, and make sure to include klee)
 
 You can run the obtained llvm code using:
 
+```
 klee Problem10.bc
+```
 
 This will generate output such as:
 
@@ -206,7 +222,9 @@ error_37 error_65 23
 
 You can find all results in the klee-out-1 directory. The results are in binary form, you can inspect them using the ktest tool:
 
+```
 ktest-tool --write-ints klee-out-1/test000001.ktest
+```
 
 gives:
 
@@ -229,7 +247,9 @@ etc.
 
 Running
 
+```
 klee-stats ./klee-out-1/
+```
 
 gives some coverage information:
 
@@ -265,6 +285,6 @@ error_30 Problem10.bc: Problem10.c:10: void __VERIFIER_error(int): Assertion `0'
 Aborted
 ```
 
-Happy bug hunting.
+Read more on the feature of KLEE at: http://klee.github.io/docs/. Happy bug hunting.
 
 https://feliam.wordpress.com/2010/10/07/the-symbolic-maze/ is also well-worth checking out.
