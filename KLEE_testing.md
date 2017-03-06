@@ -22,7 +22,13 @@ to exit. Another important command is to make Docker mount a local directory:
 
 sudo docker run -v [PATH IN THE HOST MACHINE]:[PATH IN THE CONTAINER] -ti --name=[NAME OF THE CONTAINER] --ulimit='stack=-1:-1' klee/klee
 
-which will load the host path and a path in the Docker container (I simply give it my home_dir).
+which will load the host path and a path in the Docker container. I simply give it my home_dir:
+
+sudo docker run -v /Users/sicco/:/home/klee/sicco -ti --name=dock_klee --ulimit='stack=-1:-1' klee/klee
+
+You can remove an old contained using rm:
+
+docker rm dock_klee
 
 Then download and unpack the RERS challenge programs:
 
