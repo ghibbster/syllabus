@@ -14,7 +14,11 @@ to get KLEE, and run:
 
 docker run --rm -ti --ulimit='stack=-1:-1' klee/klee
 
-to start a small VM containing KLEE, more details can be found at: http://klee.github.io/docker/. One important command is to make Docker mount a local directory:
+to start a small VM containing KLEE, more details can be found at: http://klee.github.io/docker/. Run
+
+exit
+
+to exit. Another important command is to make Docker mount a local directory:
 
 sudo docker run -v [PATH IN THE HOST MACHINE]:[PATH IN THE CONTAINER] -ti --name=[NAME OF THE CONTAINER] --ulimit='stack=-1:-1' klee/klee
 
