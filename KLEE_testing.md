@@ -241,6 +241,30 @@ gives some coverage information:
 ----------------------------------------------------------------------------
 ```
 
-With klee run test you can replay inputs (still gives a linking problem on my system...TBC)..
+With klee run test you can replay inputs, the following works on my system:
+
+```
+export LD_LIBRARY_PATH=/home/klee/klee_build/klee/lib/:$LD_LIBRARY_PATH
+clang -I /home/klee/klee_src/include -L /home/klee/klee_build/klee/lib Problem10.c -o Problem10.bc -lkleeRuntest
+KTEST_FILE=klee-out-1/test000001.test ./Problem10.bc
+```
+
+which gives nothing, as expected with an input of all 0s. A more interesting cases:
+
+```
+KTEST_FILE=klee-out-1/test000227.ktest ./Problem10.bc 
+26
+21
+21
+23
+23
+Invalid input: 2
+Invalid input: 2
+21
+error_30 Problem10.bc: Problem10.c:10: void __VERIFIER_error(int): Assertion `0' failed.
+Aborted
+```
+
+Happy bug hunting.
 
 https://feliam.wordpress.com/2010/10/07/the-symbolic-maze/ is also well-worth checking out.
