@@ -101,4 +101,146 @@ int main()
 
 This makes all input symbolic, for up to length 20 inputs. KLEE will try to trigger new code branches with symbolic values for these 20 integer inputs. In contrast to AFL, we do not need to specify the input files. Everything is determined by analyzing the code.
 
-.. TODO: give example command line ..
+You can compile the obtained .c file using:
+
+clang -I /home/klee/klee_src/include -emit-llvm -g -c Problem10.c -o Problem10.bc
+
+(obtain llvm, and make sure to include klee)
+
+You can run the obtained llvm code using:
+
+klee Problem10.bc
+
+This will generate output such as:
+
+```
+KLEE: output directory is "/home/klee/sicco/ReachabilityRERS2017/Problem10/klee-out-1"
+KLEE: Using STP solver backend
+WARNING: this target does not support the llvm.stacksave intrinsic.
+KLEE: WARNING: undefined reference to function: fflush
+KLEE: WARNING: undefined reference to function: fprintf
+KLEE: WARNING: undefined reference to function: printf
+KLEE: WARNING: undefined reference to variable: stderr
+KLEE: WARNING: undefined reference to variable: stdout
+KLEE: WARNING ONCE: calling external: printf(45009888, 25)
+25
+KLEE: WARNING ONCE: calling external: fflush(47316350944256)
+26
+25
+KLEE: ERROR: /home/klee/sicco/ReachabilityRERS2017/Problem10/Problem10.c:2456: external call with symbolic argument: fprintf
+KLEE: NOTE: now ignoring this error at this location
+21
+20
+22
+20
+21
+22
+26
+22
+20
+22
+20
+23
+26
+26
+24
+20
+22
+25
+20
+22
+21
+20
+22
+20
+23
+21
+20
+20
+21
+20
+23
+22
+24
+22
+23
+20
+22
+20
+20
+22
+22
+22
+21
+23
+25
+20
+25
+21
+20
+25
+21
+22
+21
+26
+KLEE: WARNING ONCE: calling external: fprintf(47316350943680, 41577152, 46)
+error_46 KLEE: ERROR: /home/klee/sicco/ReachabilityRERS2017/Problem10/Problem10.c:10: ASSERTION FAIL: 0
+KLEE: NOTE: now ignoring this error at this location
+25
+26
+```
+
+You can get rid of the warnings if you like. At this point error 46 has been generated, a little further more will occur:
+
+```
+error_12 26
+error_2 error_22 26
+22
+error_30 error_70 21
+22
+20
+error_37 error_65 23
+23
+...
+```
+
+You can find all results in the klee-out-1 directory. The results are in binary form, you can inspect them using the ktest tool:
+
+ktest-tool --write-ints klee-out-1/test000001.ktest
+
+gives:
+
+```
+ktest file : 'klee-last/test000001.ktest'
+args       : ['Problem10.bc']
+num objects: 1
+object    0: name: b'program'
+object    0: size: 80
+object    0: data: b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+```
+
+An input with only \x00's. In test000002.ktest, the first one is a \x04:
+
+```
+object    0: data: b'\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+```
+
+etc.
+
+Running
+
+klee-stats ./klee-out-1/
+
+gives some coverage information:
+
+```
+----------------------------------------------------------------------------
+|    Path     |  Instrs|  Time(s)|  ICov(%)|  BCov(%)|  ICount|  TSolver(%)|
+----------------------------------------------------------------------------
+|./klee-out-4/|  245185|     6.14|    83.52|    75.58|    6952|       54.67|
+----------------------------------------------------------------------------
+```
+
+With klee run test you can replay inputs (still gives a linking problem on my system...TBC)..
+
+https://feliam.wordpress.com/2010/10/07/the-symbolic-maze/ is also well-worth checking out.
