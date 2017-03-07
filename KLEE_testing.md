@@ -285,6 +285,26 @@ error_30 Problem10.bc: Problem10.c:10: void __VERIFIER_error(int): Assertion `0'
 Aborted
 ```
 
+In case you are interested (as I am), you can find the query send to the SMT solver:
+
+```
+cat klee-out-1/test000227.kquery
+```
+
+compare this with the generated input:
+
+```
+ktest-tool --write-ints klee-out-1/test000227.ktest
+```
+
+and send it to the SMT solver, although I am not yet sure on how to get the output from the solver..(anyone can figure it out from the very brief documentation? http://klee.github.io/docs/kleaver-options/ and http://klee.github.io/docs/kquery/)
+
+```
+kleaver klee-out-1/test000227.kquery
+```
+
+
+
 Read more on the feature of KLEE at: http://klee.github.io/docs/. Happy bug hunting.
 
 https://feliam.wordpress.com/2010/10/07/the-symbolic-maze/ is also well-worth checking out.
