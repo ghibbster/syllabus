@@ -317,7 +317,7 @@ array program[80] : w32 -> w8 = symbolic
         false)
 ```
 
-compare this with the generated input (which seems to satisfy all the constraints):
+compare this with the generated input (which seems to satisfy all the constraints, of which some seem not very optimized...e.g.: (N1=2 and N1 != 5 and N1 != 4 and N1 != 3 and N1 != 1):
 
 ```
 ktest-tool --write-ints klee-out-1/test000227.ktest
