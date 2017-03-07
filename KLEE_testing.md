@@ -289,12 +289,44 @@ In case you are interested (as I am), you can find the query send to the SMT sol
 
 ```
 cat klee-out-1/test000227.kquery
+array program[80] : w32 -> w8 = symbolic
+(query [(Eq 5
+             (ReadLSB w32 0 program))
+         (Eq 1
+             (ReadLSB w32 4 program))
+         (Eq 2
+             (ReadLSB w32 8 program))
+         (Eq 3
+             (ReadLSB w32 12 program))
+         (Eq 3
+             (ReadLSB w32 16 program))
+         (Eq 2
+             N0:(ReadLSB w32 20 program))
+         (Eq false (Eq 5 N0))
+         (Eq false (Eq 4 N0))
+         (Eq false (Eq 3 N0))
+         (Eq false (Eq 1 N0))
+         (Eq 2
+             N1:(ReadLSB w32 24 program))
+         (Eq false (Eq 5 N1))
+         (Eq false (Eq 4 N1))
+         (Eq false (Eq 3 N1))
+         (Eq false (Eq 1 N1))
+         (Eq 3
+             (ReadLSB w32 28 program))]
+        false)
 ```
 
-compare this with the generated input:
+compare this with the generated input (which seems to satisfy all the constraints):
 
 ```
 ktest-tool --write-ints klee-out-1/test000227.ktest
+ktest file : 'klee-out-1/test000227.ktest'
+args       : ['Problem10.bc']
+num objects: 1
+object    0: name: b'program'
+object    0: size: 80
+object    0: data: b'\x05\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\x03\x00\x00\x00\x03\x00\x00\x00\x02\x00\x00\x00\x02\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
 ```
 
 and send it to the SMT solver, although I am not yet sure on how to get the output from the solver..(anyone can figure it out from the very brief documentation? http://klee.github.io/docs/kleaver-options/ and http://klee.github.io/docs/kquery/)
