@@ -337,6 +337,6 @@ kleaver klee-out-1/test000227.kquery
 
 
 
-Read more on the feature of KLEE at: http://klee.github.io/docs/. Happy bug hunting.
+Read more on the features of KLEE at: http://klee.github.io/docs/. Happy bug hunting.
 
 https://feliam.wordpress.com/2010/10/07/the-symbolic-maze/ is also well-worth checking out.
