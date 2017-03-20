@@ -81,11 +81,11 @@ Process finished with exit code 0
 
 The learner should also have created the files `hypothesis0.dot`, `hypothesis0.pdf`, `hypothesis1.dot`, `hypothesis1.pdf`, `model.dot` and `model.pdf` in your working directory. If you do not see the pdf files, this means that the `dot` tool is not installed correctly --- so install the graphviz library again. Take a look at the first pdf file:
 
-![](hypothesis1.png?raw=true)
+![](hypothesis0.png?raw=true)
 
 And the second:
 
-[[hypothesis1.png]]
+![](hypothesis1.png?raw=true)
 
 Do you see how the second hypothesis is a refinement of the fist? Do you see how the second model relates to the code in `ExampleSUL`?
 
@@ -151,7 +151,7 @@ In learning, you have to specify the input alphabet that the learner uses. This 
 
 Then run `RERSExperiment.main()`. In my case, this gives the following model:
 
-[[model.png]]
+![](model.png)
 
 But you can get much larger models by changing the behavior of the process. Modify line 28 in RERSExperiment:
 
