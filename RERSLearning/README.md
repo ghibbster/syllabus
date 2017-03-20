@@ -61,4 +61,4 @@ The following line can be modified to change certain aspects of the learning pro
         BasicLearner.runControlledExperiment(sul, BasicLearner.LearningMethod.TTT, BasicLearner.TestingMethod.RandomWalk, inputAlphabet);
 ```
 
-Happy learning!
+Happy learning! Have a look at some cool case-studies: http://automata.cs.ru.nl/Benchmarks 
