@@ -81,11 +81,11 @@ Process finished with exit code 0
 
 The learner should also have created the files `hypothesis0.dot`, `hypothesis0.pdf`, `hypothesis1.dot`, `hypothesis1.pdf`, `model.dot` and `model.pdf` in your working directory. If you do not see the pdf files, this means that the `dot` tool is not installed correctly --- so install the graphviz library again. Take a look at the first pdf file:
 
-![](hypothesis0.png?raw=true)
+![](hypothesis0.png)
 
 And the second:
 
-![](hypothesis1.png?raw=true)
+![](hypothesis1.png)
 
 Do you see how the second hypothesis is a refinement of the fist? Do you see how the second model relates to the code in `ExampleSUL`?
 
